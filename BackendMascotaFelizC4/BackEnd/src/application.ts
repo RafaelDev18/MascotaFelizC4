@@ -2,13 +2,17 @@ import {BootMixin} from '@loopback/boot';
 import {ApplicationConfig} from '@loopback/core';
 import {
   RestExplorerBindings,
-  RestExplorerComponent,
+  RestExplorerComponent
 } from '@loopback/rest-explorer';
 import {RepositoryMixin} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
 import {ServiceMixin} from '@loopback/service-proxy';
 import path from 'path';
 import {MySequence} from './sequence';
+import {EstrategiaAdministrador} from './strategies/admin.strategy';
+import {AuthenticationComponent, registerAuthenticationStrategy} from '@loopback/authentication';
+import {EstrategiaAsesor} from './strategies/asesor.strategy';
+import {EstrategiaCliente} from './strategies/cliente.strategy';
 
 export {ApplicationConfig};
 
@@ -40,5 +44,11 @@ export class MascotaFelizApp extends BootMixin(
         nested: true,
       },
     };
+
+    registerAuthenticationStrategy(this, EstrategiaAdministrador);
+    registerAuthenticationStrategy(this, EstrategiaAsesor);
+    registerAuthenticationStrategy(this, EstrategiaCliente);
+    this.component(AuthenticationComponent);
+    //Agregar las demas estrategias
   }
 }

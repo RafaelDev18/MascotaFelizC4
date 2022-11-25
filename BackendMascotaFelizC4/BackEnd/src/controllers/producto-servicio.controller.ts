@@ -1,21 +1,16 @@
+import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
   Filter,
   FilterExcludingWhere,
   repository,
-  Where,
+  Where
 } from '@loopback/repository';
 import {
-  post,
-  param,
-  get,
-  getModelSchemaRef,
-  patch,
-  put,
-  del,
-  requestBody,
-  response,
+  del, get,
+  getModelSchemaRef, param, patch, post, put, requestBody,
+  response
 } from '@loopback/rest';
 import {ProductoServicio} from '../models';
 import {ProductoServicioRepository} from '../repositories';
@@ -23,9 +18,10 @@ import {ProductoServicioRepository} from '../repositories';
 export class ProductoServicioController {
   constructor(
     @repository(ProductoServicioRepository)
-    public productoServicioRepository : ProductoServicioRepository,
-  ) {}
+    public productoServicioRepository: ProductoServicioRepository,
+  ) { }
 
+  //@authenticate("admin")
   @post('/productos-servicios')
   @response(200, {
     description: 'ProductoServicio model instance',
@@ -58,6 +54,7 @@ export class ProductoServicioController {
     return this.productoServicioRepository.count(where);
   }
 
+  
   @get('/productos-servicios')
   @response(200, {
     description: 'Array of ProductoServicio model instances',
